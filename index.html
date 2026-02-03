@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>medyo safe na website</title>
+<style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+    body {
+        font-family: 'Comic Sans MS', cursive;
+        background: #FFE5EC;
+        min-height:100vh;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding:20px;
+        overflow:hidden;
+    }
+    .container {
+        text-align:center;
+        position:relative;
+        max-width:800px;
+    }
+    h3 {
+        font-size:2.8rem;
+        margin-bottom:3rem;
+        transform: rotate(-2deg);
+        color:#FF1493;
+        line-height:1.3;
+    }
+    .question {
+        margin-bottom:4rem;
+    }
+    .question.hidden {
+        display:none;
+    }
+    .btn-group {
+        display:flex;
+        gap:1.5rem;
+        justify-content:center;
+        flex-wrap:wrap;
+    }
+    button {
+        background:#FF6B9D;
+        border:none;
+        padding:1.3rem 2.5rem;
+        border-radius:18px;
+        font-family:inherit;
+        font-size:1.3rem;
+        cursor:pointer;
+        position:relative;
+        box-shadow:0 5px 15px rgba(0,0,0,0.15);
+        transition:transform 0.1s;
+    }
+    button:active {
+        transform:scale(0.95);
+    }
+    button a {
+        color:white;
+        text-decoration:none;
+        font-weight:bold;
+    }
+    #noBtn {
+        background:#FFB3D9;
+    }
+    #noBtn.vanish {
+        animation:flyOff 0.8s forwards;
+    }
+    @keyframes flyOff {
+        0% {opacity:1; transform:rotate(0deg) translate(0,0) scale(1);}
+        100% {opacity:0; transform:rotate(360deg) translate(300px,-200px) scale(0.3);}
+    }
+    
+    .yes-clone {
+        position:absolute;
+        background:#FF6B9D;
+        border:none;
+        padding:1.3rem 2.5rem;
+        border-radius:18px;
+        font-family:inherit;
+        font-size:1.3rem;
+        cursor:pointer;
+        box-shadow:0 5px 15px rgba(0,0,0,0.15);
+        animation:spawn 0.5s ease-out;
+    }
+    .yes-clone a {
+        color:white;
+        text-decoration:none;
+        font-weight:bold;
+    }
+    @keyframes spawn {
+        0% {transform:scale(0) rotate(0deg); opacity:0;}
+        100% {transform:scale(1) rotate(calc(var(--rotate)*1deg)); opacity:1;}
+    }
+    
+    /* Confetti */
+    .confetti {
+        position:absolute;
+        width:8px;
+        height:8px;
+        background:#FF6B9D;
+        top:-10px;
+        animation:fall 4s linear infinite;
+        opacity:0.7;
+        pointer-events:none;
+    }
+    @keyframes fall{
+        0%{top:-10px; transform:rotate(0deg);}
+        100%{top:110vh; transform:rotate(360deg);}
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="question" id="q1">
+            <h3>Q1. birthday mo ngayon?</h3>
+            <div class="btn-group">
+                <button id="yesBtn1"><a href="birthday.html">a. yes</a></button>
+                <button id="noBtn">b. no</button>
+            </div>
+        </div>
+        
+        <div class="question hidden" id="q2">
+            <h3>Q2. tunay?</h3>
+            <div class="btn-group">
+                <button><a href="letter.html">a. yes</a></button>
+                <button><a href="letter.html">b. yes</a></button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn1 = document.getElementById('yesBtn1');
+        const container = document.querySelector('.container');
+        const q1 = document.getElementById('q1');
+        const q2 = document.getElementById('q2');
+        
+        noBtn.addEventListener('click', function(e){
+            e.preventDefault();
+            this.classList.add('vanish');
+            
+            // Spawn yes buttons
+            for(let i=0; i<8; i++){
+                setTimeout(()=>{
+                    const clone = document.createElement('button');
+                    clone.className = 'yes-clone';
+                    clone.innerHTML = '<a>a. yes</a>';
+                    clone.style.setProperty('--rotate', Math.random()*20-10);
+                    clone.style.left = Math.random()*80 + 10 + '%';
+                    clone.style.top = Math.random()*60 + 20 + '%';
+                    clone.style.pointerEvents = 'auto';
+                    clone.addEventListener('click', showQ2);
+                    container.appendChild(clone);
+                }, i*100);
+            }
+        });
+        
+        yesBtn1.addEventListener('click', function(e){
+            e.preventDefault();
+            showQ2();
+        });
+        
+        function showQ2(){
+            // Remove all spawned yes buttons
+            const clones = document.querySelectorAll('.yes-clone');
+            clones.forEach(clone => clone.remove());
+            
+            q1.classList.add('hidden');
+            q2.classList.remove('hidden');
+        }
+        
+        // Confetti
+        for(let i=0;i<20;i++){
+            const c=document.createElement('div');
+            c.classList.add('confetti');
+            c.style.left=Math.random()*100+'%';
+            c.style.background=['#FF6B9D','#FFD9E3','#FFB3D9'][Math.floor(Math.random()*3)];
+            c.style.width=2+Math.random()*6+'px';
+            c.style.height=c.style.width;
+            c.style.animationDelay=Math.random()*4+'s';
+            document.body.appendChild(c);
+        }
+    </script>
+</body>
+</html>

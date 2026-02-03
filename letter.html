@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>habi birthday!!</title>
+<style>
+* {margin:0; padding:0; box-sizing:border-box;}
+body {
+    font-family:'Comic Sans MS', cursive;
+    background:#FFE5EC;
+    padding:20px;
+    min-height:100vh;
+    overflow-x:hidden;
+    position:relative;
+}
+
+/* ==== BIG MUSIC PLAYER ==== */
+.music-player {
+    background:#FFB3D9;
+    padding:30px;
+    border-radius:20px;
+    width:90%;
+    max-width:500px;
+    margin:0 auto 50px auto;
+    text-align:center;
+}
+
+.album-art {
+    width:280px;
+    height:280px;
+    border-radius:15px;
+    object-fit:cover;
+    margin:0 auto 25px auto;
+    display:block;
+    box-shadow:0 8px 20px rgba(0,0,0,0.15);
+    animation:wobble 2s infinite;
+}
+
+@keyframes wobble{
+    0%{transform:rotate(-2deg);}
+    50%{transform:rotate(2deg);}
+    100%{transform:rotate(-2deg);}
+}
+
+.track-info {
+    margin-bottom:25px;
+    height:30px;
+    overflow:hidden;
+    position:relative;
+    width:100%;
+}
+
+.track-title {
+    font-size:1.3rem;
+    font-weight:bold;
+    color:#fff;
+    white-space:nowrap;
+    position:absolute;
+    animation:marquee 12s linear infinite;
+}
+
+@keyframes marquee {
+    0% {left:100%;}
+    100% {left:-100%;}
+}
+
+.controls {
+    display:flex;
+    gap:15px;
+    justify-content:center;
+}
+
+.controls button {
+    border:none;
+    background:#FF6B9D;
+    color:white;
+    font-size:1.5rem;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+}
+
+.controls button:active {
+    transform:scale(0.95);
+}
+
+/* ==== GREETING ==== */
+.greeting {
+    text-align:center;
+    font-size:2.5rem;
+    margin-bottom:30px;
+    transform:rotate(-1deg);
+    color:#FF1493;
+}
+
+/* ==== MESSAGE ==== */
+.message {
+    max-width:650px;
+    margin:0 auto 30px auto;
+    background:#FFD9E3;
+    padding:25px;
+    border-radius:18px;
+    transform:rotate(1deg);
+    font-size:1.15rem;
+    line-height:1.6;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* ==== FUN FACTS ==== */
+.fun-facts {
+    max-width:650px;
+    margin:0 auto;
+}
+
+.fun-facts h3 {
+    margin-bottom:20px;
+    color:#FF6B9D;
+    font-size:1.3rem;
+}
+
+.fun-facts ul {
+    list-style:none;
+}
+
+.fun-facts li {
+    background:#FFB3D9;
+    padding:15px;
+    margin:12px 0;
+    border-radius:12px;
+    display:inline-block;
+    font-size:1.05rem;
+    box-shadow:0 3px 8px rgba(0,0,0,0.1);
+}
+
+.fun-facts li:nth-child(1){transform:rotate(-1.5deg);}
+.fun-facts li:nth-child(2){transform:rotate(2deg);}
+.fun-facts li:nth-child(3){transform:rotate(-2deg);}
+.fun-facts li:nth-child(4){transform:rotate(1deg);}
+
+/* ==== FOOTER ==== */
+footer {
+    text-align:center;
+    margin-top:50px;
+    color:#FF6B9D;
+    font-size:1.2rem;
+}
+
+/* ==== CONFETTI ==== */
+.confetti {
+    position:absolute;
+    width:10px;
+    height:10px;
+    background:#FF6B9D;
+    top:-10px;
+    animation:fall 3s linear infinite;
+    opacity:0.8;
+    pointer-events:none;
+}
+
+@keyframes fall{
+    0%{top:-10px; transform:rotate(0deg);}
+    100%{top:110%; transform:rotate(360deg);}
+}
+</style>
+</head>
+<body>
+
+<div class="music-player">
+    <img src="her.jpg" class="album-art" alt="cover">
+    <div class="track-info">
+        <div class="track-title">nakalimutan ko title, basta hbd!!</div>
+    </div>
+    <div class="controls">
+        <button onclick="document.getElementById('bgm').play()">▶</button>
+        <button onclick="document.getElementById('bgm').pause()">⏸</button>
+    </div>
+</div>
+
+<audio id="bgm" loop>
+    <source src="bgm.mp3" type="audio/mpeg">
+</audio>
+
+<h1 class="greeting" id="typed"></h1>
+
+<div class="message">
+    ANG CORNY KO A HAHAHAHHSHA <br>
+    HAPPY BIRTHDAY SEE YOU MAMAYA <3
+</div>
+
+<div class="fun-facts">
+    <h3>mga fun facts about feb 4, according sa aking research?</h3>
+    <ul>
+        <li>🌐 facebook was released on Feb 4, 2004</li>
+        <li>🪐 neptune was discovered on Feb 4, 1781</li>
+        <li>♒ aquarius ka : )</li>
+        <li>... at nagstart din pala ang ph-american war 1899.</li>
+    </ul>
+</div>
+
+<footer>
+    made with ♥ by paul v.
+</footer>
+
+<script>
+// ==== TYPED GREETING ====
+const greeting = "HAPPY BIRTHDAY ESPERANZA!! (˘︶˘).｡.:*♡ ";
+const typed = document.getElementById('typed');
+let i=0;
+function type(){
+    if(i<greeting.length){
+        typed.innerHTML += greeting[i];
+        i++;
+        setTimeout(type,100);
+    }
+}
+type();
+
+// ==== CONFETTI ====
+for(let j=0;j<25;j++){
+    const c=document.createElement('div');
+    c.classList.add('confetti');
+    c.style.left=Math.random()*100+'%';
+    c.style.background=['#FF6B9D','#FFD9E3','#FFB3D9'][Math.floor(Math.random()*3)];
+    c.style.width=2+Math.random()*6+'px';
+    c.style.height=c.style.width;
+    c.style.animationDelay=Math.random()*3+'s';
+    document.body.appendChild(c);
+}
+
+// ==== CLICK MESSAGE FOR CONFETTI BURST ====
+document.querySelector('.message').addEventListener('click',()=>{
+    for(let k=0;k<15;k++){
+        const burst=document.createElement('div');
+        burst.classList.add('confetti');
+        burst.style.left=Math.random()*100+'%';
+        burst.style.top='50%';
+        burst.style.background=['#FF6B9D','#FFD9E3','#FFB3D9'][Math.floor(Math.random()*3)];
+        burst.style.width=3+Math.random()*4+'px';
+        burst.style.height=burst.style.width;
+        document.body.appendChild(burst);
+        setTimeout(()=>burst.remove(),3000);
+    }
+});
+</script>
+
+</body>
+</html>
